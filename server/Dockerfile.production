@@ -12,8 +12,11 @@ COPY /pnpm-lock.yaml ./
 RUN npm i -g pnpm
 RUN pnpm i
 
-COPY src src
-COPY tsconfig.json tsconfig.json
-COPY .env .env
+COPY tsconfig.json ./
+COPY src ./
 
-CMD npm start
+# tanspile TS into JS for perf
+RUN ["npm", "run", "build"]
+
+# the command that starts our app
+CMD ["npm", "run", "start:prod"]
