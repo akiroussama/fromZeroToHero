@@ -1,7 +1,7 @@
-import { Field, InputType, ObjectType } from "type-graphql";
-import { MaxLength, MinLength } from "class-validator";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
-import Grade from "./Grade";
+import { Field, InputType, ObjectType } from 'type-graphql';
+import { MaxLength, MinLength } from 'class-validator';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import Grade from './Grade';
 
 @ObjectType()
 class SkillOfWilder {
@@ -27,15 +27,15 @@ class Wilder {
   name?: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, length: 100, type: "varchar" })
+  @Column({ nullable: true, length: 100, type: 'varchar' })
   city?: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, length: 100, type: "varchar" })
+  @Column({ nullable: true, length: 100, type: 'varchar' })
   avatarUrl?: string;
 
   @Field({ nullable: true })
-  @Column({ nullable: true, type: "text" })
+  @Column({ nullable: true, type: 'text' })
   bio?: string;
 
   @Field(() => [SkillOfWilder])

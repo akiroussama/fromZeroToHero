@@ -1,6 +1,5 @@
-import Wilder from "./Wilder";
-import Skill from "./Skill";
-import Grade from "./Grade";
-import User from "./User";
+import Wilder from './Wilder';
+import Grade from './Grade';
+import Skill from './Skill';
 
-export const entities = [Wilder, Skill, Grade, User];
+export const entities = [Wilder, Grade, Skill];
