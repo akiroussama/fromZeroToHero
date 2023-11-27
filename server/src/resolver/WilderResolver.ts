@@ -1,8 +1,8 @@
-import { Arg, Authorized, Int, Mutation, Query, Resolver } from "type-graphql";
-import Wilder, { SkillId, WilderInput } from "../entity/Wilder";
-import datasource from "../db";
-import Grade from "../entity/Grade";
-import { Role } from "../entity/User";
+import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql';
+import Wilder, { SkillId, WilderInput } from '../entity/Wilder';
+import datasource from '../db';
+import Grade from '../entity/Grade';
+import { Role } from '../entity/User';
 
 @Resolver(Wilder)
 export class WilderResolver {
@@ -23,12 +23,12 @@ export class WilderResolver {
   }
 
   @Query(() => Wilder)
-  async wilder(@Arg("id", () => Int) id: number): Promise<Wilder> {
+  async wilder(@Arg('id', () => Int) id: number): Promise<Wilder> {
     const wilder = await datasource
       .getRepository(Wilder)
       .findOne({ where: { id }, relations: { grades: { skill: true } } });
 
-    if (wilder === null) throw new Error("wilder not found");
+    if (wilder === null) throw new Error('wilder not found');
 
     return {
       ...wilder,
@@ -41,22 +41,21 @@ export class WilderResolver {
   }
 
   @Mutation(() => Wilder)
-  async createWilder(@Arg("data") data: WilderInput): Promise<Wilder> {
+  async createWilder(@Arg('data') data: WilderInput): Promise<Wilder> {
     return await datasource.getRepository(Wilder).save(data);
   }
 
-  @Authorized<Role>(["admin"])
   @Mutation(() => Boolean)
-  async deleteWilder(@Arg("id", () => Int) id: number): Promise<boolean> {
+  async deleteWilder(@Arg('id', () => Int) id: number): Promise<boolean> {
     const { affected } = await datasource.getRepository(Wilder).delete(id);
-    if (affected === 0) throw new Error("wilder not found");
+    if (affected === 0) throw new Error('wilder not found');
     return true;
   }
 
   @Mutation(() => Wilder)
   async updateWilder(
-    @Arg("id", () => Int) id: number,
-    @Arg("data") data: WilderInput
+    @Arg('id', () => Int) id: number,
+    @Arg('data') data: WilderInput
   ): Promise<Wilder> {
     const { name, bio, avatarUrl, city, skills } = data;
     const wilderToUpdate = await datasource.getRepository(Wilder).findOne({
@@ -64,7 +63,7 @@ export class WilderResolver {
       relations: { grades: { skill: true } },
     });
 
-    if (wilderToUpdate === null) throw new Error("NOT_FOUND");
+    if (wilderToUpdate === null) throw new Error('NOT_FOUND');
 
     wilderToUpdate.name = name;
     wilderToUpdate.bio = bio;
@@ -74,7 +73,7 @@ export class WilderResolver {
     await datasource.getRepository(Wilder).save(wilderToUpdate);
 
     const existingSkillIds = wilderToUpdate.grades.map((g) => g.skill.id);
-    const newSkillIds = (typeof skills === "undefined" ? [] : skills).map(
+    const newSkillIds = (typeof skills === 'undefined' ? [] : skills).map(
       (s: SkillId) => s.id
     );
     const skillIdsToAdd = newSkillIds.filter(
