@@ -1,0 +1,9 @@
+services:
+  server:
+    environment:
+      DB_HOST: db
+    build: './server'
+    ports:
+      - 4000:4000
+    volumes:
+      - ./server/src:/app/src
