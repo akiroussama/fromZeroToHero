@@ -1,15 +1,15 @@
-import { DataSource } from "typeorm";
-import { env } from "./env";
-import { entities } from "./entity";
+import { DataSource } from 'typeorm';
+import { env } from './env';
+import Wilder from './entity/Wilder';
 
 export default new DataSource({
-  type: "postgres",
-  host: env.DB_HOST || "db",
-  port: env.DB_PORT || 5432,
-  username: env.DB_USER || "postgres",
-  password: env.DB_PASS || "postgres",
-  database: env.DB_NAME || "postgres",
+  type: 'postgres',
+  host: 'db',
+  port: 5432,
+  username: 'postgres',
+  password: 'postgres',
+  database: 'postgres',
   synchronize: true,
-  entities,
-  logging: ["error"],
+  entities: [Wilder],
+  logging: ['error'],
 });

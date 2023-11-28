@@ -11,6 +11,14 @@ export class WilderResolver {
     return wilders.find();
   }
 
+  @Query(() => Wilder)
+  async wilder(@Arg('id', () => Int) id: number): Promise<Wilder> {
+    const wilders = await datasource.getRepository(Wilder);
+    const wilder = await wilders.findOne(id);
+    if (!wilder) throw new Error('wilder not found');
+    return wilder;
+  }
+
   @Mutation(() => Wilder)
   async createWilder(@Arg('data') data: WilderInput): Promise<Wilder> {
     return await datasource.getRepository(Wilder).save(data);
