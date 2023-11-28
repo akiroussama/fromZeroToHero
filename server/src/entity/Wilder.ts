@@ -72,6 +72,9 @@ export class WilderInput {
 
   @Field(() => [SkillId], { nullable: true })
   skills?: SkillId[];
+
+  @OneToMany(() => Grade, (g) => g.wilder)
+  grades: Grade[];
 }
 
 export default Wilder;
