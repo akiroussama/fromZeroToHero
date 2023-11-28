@@ -1,5 +1,4 @@
 import { DataSource } from 'typeorm';
-import { env } from './env';
 import Wilder from './entity/Wilder';
 
 export default new DataSource({
