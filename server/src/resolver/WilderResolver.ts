@@ -1,20 +1,20 @@
 import { Arg, Int, Mutation, Query, Resolver } from 'type-graphql';
-import Wilder, { WilderInput } from '../entity/Wilder';
-import datasource from '../db';
+import Wilder from '../entity/Wilder';
+import { WilderInput } from '../input/WilderInput';
+import { datasource } from '../index';
 
 @Resolver(Wilder)
 export class WilderResolver {
   @Query(() => [Wilder])
   async wilders(): Promise<Wilder[]> {
     const wilders = await datasource.getRepository(Wilder);
-
     return wilders.find();
   }
 
   @Query(() => Wilder)
   async wilder(@Arg('id', () => Int) id: number): Promise<Wilder> {
     const wilders = await datasource.getRepository(Wilder);
-    const wilder = await wilders.findOne({ where: { id } });
+    const wilder = await wilders.findOneOrFail({ where: { id } });
     if (!wilder) throw new Error('wilder not found');
     return wilder;
   }
